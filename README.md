@@ -19,3 +19,5 @@ If the content is executable (e.g., code or a testable idea), a canvas is create
 The results are returned to the user and saved in the graph database.
 Concurrently, another agent updates the user's contributor points, while another agent tracks the user's coding style and language preferences.
 
+
+![test](test.png)
