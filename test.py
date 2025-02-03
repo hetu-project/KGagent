@@ -6,6 +6,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.tools import tool
 
 from config import *
+from model import *
 from database import *
 
 # 定义代理工具（示例工具，你可以替换成实际逻辑）
@@ -100,9 +101,30 @@ def classify_task(query: str) -> str:
     示例提示：
     “请判断下面任务描述的类型。任务描述：‘{query}’，请输出一个简短的标签，比如 code_review、doc_review 或 other。”
     """
-    prompt = f"请判断下面任务描述的类型。任务描述：'{query}'。请输出一个简短的标签，比如 code_review, doc_review, or other。"
-    task_type = model.predict(prompt)  # ChatOpenAI 通常提供 predict 方法
-    return task_type.strip().lower()
+
+def additioncal_extract(intend:str, query: str) -> str:
+    completion = client.beta.chat.completions.parse(
+        model="gpt-4o-2024-08-06",
+        messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "Extract the code review preferences from the following description. "
+                        "Output must be valid JSON strictly following the format with keys: "
+                        "'style_check', 'security_check', and 'performance_check'."
+                    )
+                },
+                {
+                    "role": "user",
+                    "content": query
+                },
+            ],
+            response_format=CodePreferences,
+        )
+    preferences = completion.choices[0].message.parsed
+
+    print("Extracted Code Preferences:")
+    print(preferences)
 
 def multi_agent_dispatcher(user_id: str, query: str, preferences: dict) -> str:
     """
