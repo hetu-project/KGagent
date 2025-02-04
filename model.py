@@ -1,5 +1,5 @@
-from pydantic import BaseModel
-
+from pydantic import BaseModel, Field
+from enum import Enum
 
 
 class IntentType(str, Enum):
@@ -22,3 +22,4 @@ class CodePreferences(BaseModel):
 
 
 intend_model_dict = {"code_review": CodePreferences}
+
