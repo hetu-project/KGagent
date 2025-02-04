@@ -1,4 +1,4 @@
-from database import *
+from graphdatabase import *
 from config import *
 from model import *
 

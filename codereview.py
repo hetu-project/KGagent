@@ -1,5 +1,5 @@
 from langchain_core.tools import tool
-
+from graphdatabase import *
 
 # 定义代理工具（示例工具，你可以替换成实际逻辑）
 @tool

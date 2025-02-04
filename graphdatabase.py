@@ -1,5 +1,6 @@
+from config import *
+
 def store_code_snippet(user_id, code):
-    """存储代码片段到 Neo4j"""
     with driver.session() as session:
         session.write_transaction(
             lambda tx: tx.run(
@@ -15,7 +16,6 @@ def store_code_snippet(user_id, code):
 
 
 def store_review(user_id, code, review_result):
-    """存储审查结果到 Neo4j"""
     with driver.session() as session:
         session.execute_write(
             lambda tx: tx.run(
